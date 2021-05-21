@@ -28,11 +28,16 @@ export default createGlobalStyle`
     padding: 10px 20px;
     border-radius: 4px;
     font-weight: 700;
+    transition: all 300ms;
+  }
+
+  button:hover {
+    filter: brightness(75%);
   }
 
   a {
     text-decoration: none;
-    background: ${colors.primaryColor};
+    color: ${colors.primaryColor};
   }
 
   ul {
@@ -49,7 +54,7 @@ export default createGlobalStyle`
 `;
 
 export const Container = styled.section`
-  max-width: 360px;
+  max-width: 480px;
   background: #fff;
   margin: 30px auto;
   padding: 30px;

@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { isEmail } from 'validator';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { get } from 'lodash';
 import { Container } from '../../styles/GlobalStyles';
 import { Form } from './styled';
 import * as actions from '../../store/module/auth/actions';
+import Loading from '../../components/Loading';
 
 function Login(props) {
   const dispatch = useDispatch();
   const prevPath = get(props, 'location.state.prevPath', '/');
+  const isLoading = useSelector((state) => state.auth.isLoading);
   const history = get(props, 'history');
 
   const [email, setEmail] = useState('');
@@ -19,7 +21,6 @@ function Login(props) {
     e.preventDefault();
     let formErrors = false;
     if (!isEmail(email)) {
-      // eslint-disable-next-line no-unused-vars
       formErrors = true;
       toast.error('Email inválido.');
     }
@@ -28,14 +29,14 @@ function Login(props) {
       formErrors = true;
       toast.error('Senha invalida');
     }
-    // eslint-disable-next-line no-useless-return
     if (formErrors) return;
 
-    dispatch(actions.LoginRequest({ email, password, prevPath, history }));
+    dispatch(actions.loginRequest({ email, password, prevPath, history }));
   };
 
   return (
     <Container>
+      <Loading isLoading={isLoading} />
       <h1>Login</h1>
 
       <Form onSubmit={handleSubmit}>
